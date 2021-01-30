@@ -1,6 +1,6 @@
 Sample Project using React + Redux toolkit.
 
-##### Live App: https://keeeshore.github.io/weatherzone-react-reduz/
+##### Live App: https://keeeshore.github.io/weather-app-react-redux/
 
 #### Notes/Assumptions
 
