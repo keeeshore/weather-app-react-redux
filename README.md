@@ -1,4 +1,21 @@
-# Getting Started with Create React App
+Sample Project using React + Redux toolkit.
+
+##### Live App: https://keeeshore.github.io/weatherzone-react-reduz/
+
+#### Notes/Assumptions
+
+<li> Using CRA + Redux + Redux Thunk + TypeScript + SCSS for easy startup
+<li> Using http://recharts.org for developing meteogram
+<li> Basic styling is provided without the use of MaterialUI or Bootstrap or Foundation
+<li> moment-timezone is used for calculating, parsing Date & Time
+ 
+#### Things to do
+
+<li> Use Material-UI or Bootstrap or Foundation
+<li> Date Selectors/Filters
+<li> Toggles for Meteogram
+
+## Installation
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
