@@ -1,0 +1,39 @@
+.forecast-table-container {
+  margin: 10px auto;
+  padding: 10px;
+  .forecast-table-options {
+    text-align: right;
+    input {
+      margin: 10px 5px;
+    }
+  }
+}
+table.forecast {
+  width: 100%;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  tr.new-day {
+    td {
+      background: #ebebeb;
+    }
+  }
+  th {
+    border: 1px solid #ebebeb;
+    background: #f6f8ff;
+    padding: 10px;
+    &.date {
+     max-width: 70px;
+    }
+    &.direction,
+    &.speed,
+    &.temp {
+      max-width: 70px;
+    }
+  }
+  td {
+    border: 1px solid #dddcdc;
+    padding: 5px;
+  }
+}

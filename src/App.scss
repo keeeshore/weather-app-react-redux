@@ -1,0 +1,17 @@
+.App {
+  max-width: 1000px;
+  margin: 0 auto;
+  .options-container {
+    text-align: center;
+    font-size: 16px;
+  }
+  h1 {
+    text-align: center;
+    border-bottom: 1px solid #CCC;
+    display: block;
+    padding: 5px;
+  }
+  .recharts-wrapper {
+    margin: 0 auto;
+  }
+}
