@@ -8,12 +8,13 @@ Sample Project using React + Redux toolkit.
 <li> Using http://recharts.org for developing meteogram
 <li> Basic styling is provided without the use of MaterialUI or Bootstrap or Foundation
 <li> moment-timezone is used for calculating, parsing Date & Time
+<li> Cache/Redux data is cleared after 90 seconds (hardcoded in App.tsx)
  
 #### Things to do
 
 <li> Use Material-UI or Bootstrap or Foundation
 <li> Date Selectors/Filters
-<li> Toggles for Meteogram
+<li> Test cases
 
 ## Installation
 

@@ -46,9 +46,9 @@ function ForecastTable(props: any) {
 
     return (
         <div className={"forecast-table-container"}>
-            <div className={"forecast-table-options"}>
-             <input type={"button"} onClick={toggleTemperature} value={"Toggle Temperature"}/>
-             <input type={"button"} onClick={toggleSpeed} value={"Toggle Speed"}/>
+            <div className={"buttons-container"}>
+             <input type={"button"} onClick={toggleTemperature} value={`Show temp in ${inDegrees ? "Fahrenheit" : "Celsius"}`}/>
+             <input type={"button"} onClick={toggleSpeed} value={`Show wind speed in ${inKmh ? "Knots" : "Km/h"}`}/>
             </div>
             <table className={"forecast"}>
                 <thead>

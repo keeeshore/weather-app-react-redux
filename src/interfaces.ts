@@ -19,7 +19,8 @@ export interface ForecastDetail {
     rate: number;
     icon_phrase: string;
     icon_filename: string;
-};
+    forceFetch: boolean;
+}
 
 export interface MetaData {
     sector: string;
@@ -54,7 +55,7 @@ export interface Forecast {
     state?: string;
     time_zone?: string;
     part_day_forecasts: PartDayForecast;
-};
+}
 
 export interface PartDayForecast {
     related_location: any;

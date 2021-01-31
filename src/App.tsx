@@ -17,7 +17,7 @@ const locationCodes = [
     {name: "Sydney", value: 624},
 ];
 
-const cacheTimer: number = 30000;
+const cacheTimer: number = 90000; // will clear all states after 90 seconds
 
 function App() {
     const [locationId, setLocationId] = useState(624);
@@ -29,7 +29,6 @@ function App() {
     });
 
     const onLocationChange = (e: any) => {
-        console.log("onLocationChange = ", e.target.value);
         setLocationId(e.target.value);
     };
 
@@ -43,17 +42,21 @@ function App() {
     }, [locationId]);
 
     useEffect(() => {
-        setTimeout(() => {
-            console.log("*********** CLEARING ALL LOCATION DATA **************** ");
-            // dispatch(clearWeatherData());
+        // will clear existing cache after every 90 seconds.
+        const interval = setInterval(() => {
+            console.log(`*********** CLEARING ALL LOCATION DATA **************** except selected item : `, selectRef.current.value);
+            dispatch(clearWeatherData(parseInt(selectRef.current.value, 10)));
         }, cacheTimer);
+        return () => clearInterval(interval);
     }, []);
+
+    const selectRef: any = useRef();
 
     return (
         <div className="App">
             <div className={"options-container"}>
                 <label>Please select a Location: </label>
-                <select id={"locations"} onChange={onLocationChange} defaultValue={locationId}>
+                <select ref={selectRef} id={"locations"} onChange={onLocationChange} defaultValue={locationId}>
                     {locationCodes.map((loc, indexId) => {
                         return (<option key={indexId} value={loc.value}>{loc.name}</option>)
                     })}

@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { ForecastDetail, GraphForecastObj, LocationForecasts, MetaData, WeatherOptions} from "../interfaces";
+import { ForecastDetail, GraphForecastObj, LocationForecasts, WeatherOptions} from "../interfaces";
 import axios from "axios";
 import moment from "moment";
 
@@ -22,13 +22,13 @@ const graphForecast = (state = defaultGraphData, action: any) => {
 };
 
 const forecast = (state = defaultLocationForecast, action: any) => {
-    console.log("store dispatch :: forecast ::: ", action.payload);
+    console.log("store dispatch :: forecast ::: ", action);
     switch (action.type) {
         case 'ADD_LOCATION_FORECASTS': {
             return { ...state, ...action.location };
         }
         case 'CLEAR_ALL_LOCATION_FORECASTS': {
-            return defaultLocationForecast;
+            return { ...state, ...action.forecasts };
         }
         default: {
             return state;
@@ -81,16 +81,20 @@ export const updateGraphData = (forecasts: any) => {
 export const updateWeatherData = (locationId: number, options: WeatherOptions) => {
     return async (dispatch: any, getState: any) => {
         try {
-            let locationData = getState().forecast[locationId];
-            if (locationData && !options.forceFetch) {
+            let locationData: ForecastDetail = getState().forecast[locationId];
+            if (locationData && !locationData.forceFetch) {
+                // selected Location data is present in state and there is no forceFetch boolean applied, so return the same from state (Cache)
                 console.log("updateWeatherData locationData exists return the same: ");
                 return locationData;
             }
+            // Either no locationData is present, or there forceFetch=true, Therefore fetch data again
             const response = await getWeatherData(locationId, { options });
             console.log("updateWeatherData RESPONSE: ", response.data);
             locationData = response.data.countries[0].locations[0];
             const location: any = {};
             location[locationId] = locationData;
+            // Set forceFetch = false, so it need to be fetched again until explicitly set
+            location[locationId].forceFetch = false;
             dispatch({ type: "ADD_LOCATION_FORECASTS", location });
             return locationData;
         } catch (error: any) {
@@ -102,10 +106,21 @@ export const updateWeatherData = (locationId: number, options: WeatherOptions) =
 };
 
 export const clearWeatherData = (locationId?: number) => {
-   return (dispatch: any) => {
-       if (!locationId) {
-           dispatch({ type: "CLEAR_ALL_LOCATION_FORECASTS" });
-       }
+   return (dispatch: any, getState: any) => {
+       let data = getState().forecast;
+       let forecasts: any = {};
+       Object.keys(data).forEach((key: any) => {
+           debugger;
+           if (parseInt(key, 10) === locationId) {
+               // forceFetch = true; Because the data is in use currently, do not clear it, but make sure to fetch it when its reloaded.
+               forecasts[key] = data[key];
+               forecasts[key].forceFetch = true;
+           } else {
+               // Remove all other items in forecast state as they need to fetched from server again.
+               forecasts[key] = undefined;
+           }
+       });
+       dispatch({ type: "CLEAR_ALL_LOCATION_FORECASTS", forecasts });
    }
 };
 
